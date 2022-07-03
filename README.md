@@ -1,6 +1,6 @@
 # Simple API with Go Gin
 Defining a simple api with Go Gin:
-```
+```{go}
     func main() {
 	router := gin.Default()
 
@@ -27,3 +27,54 @@ And to test this endpoint:
 ```
     curl -X GET http://localhost:8080
 ```
+
+## Define the Go Modules
+
+To define the dependencies/modules of our project, we put the following:
+```{go}
+    go mod init <name>
+```
+
+Then we go to the new go.mod created file, and put the dependencies.
+```{go}
+    module github.com/Nil-Andreu/simple-go-api
+
+    go 1.18
+
+    require github.com/gin-gonic/gin v1.8.1
+```
+So we are basically putting which is our github repository (to download the code from), which golang version we are using, and then which packages we need (Gin only in this case).
+
+This will make all the work or then handling sub-dependencies.
+
+## Running the app with Docker
+
+Once we defined the dependencies, we can create the Docker image that we could use for then deploy this simple endpoint to a server.
+
+For this, we use the Dockerfile:
+```{go}
+    FROM golang:1.18-alpine
+
+    # Create the application default directory
+    WORKDIR /app
+
+    # Pass to this new directory the files we need
+    COPY main.go .
+    COPY go.mod .
+    COPY go.sum .
+
+    
+    # Download the dependencies
+    RUN go mod download
+
+    # Run the application
+    EXPOSE 8080
+    CMD go run main.go
+```
+Where first we state which is the golang version we want to use.
+
+Then we define which is going to be the WORKDIR of our app, and we copy the files that we need.
+
+Then, we run the *go mod download* for installing the necessary dependencies.
+
+Finally, exposing the endpoint and running the file where we have defined our endpoint.
