@@ -78,3 +78,29 @@ Then we define which is going to be the WORKDIR of our app, and we copy the file
 Then, we run the *go mod download* for installing the necessary dependencies.
 
 Finally, exposing the endpoint and running the file where we have defined our endpoint.
+
+So if we want to then create the image, and start a container, we can run at the terminal the following commands:
+```
+    docker build . simple-api:v1
+    docker run -p 8080:8080 simple-api:v1 -d
+```
+For simplicity, I have put those commands in a Makefile. So you can run them directly with: make docker.
+
+So we could go to the terminal on port 8080, and obtain the response.
+
+# Adding another Enpoint
+To give a bit more information, we could add another endpoint.
+This one, checks for parameters on the URL to then create a custom output:
+```
+    import ("fmt"
+    ...
+
+    router.GET("/name/:name", func(c *gin.Context) {
+		name := c.Param("name")
+		message := fmt.Sprintf("Hello %s!", name)
+		c.JSON(200, gin.H{
+			"message": message,
+		})
+	})
+```
+
