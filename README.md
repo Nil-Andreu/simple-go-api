@@ -88,7 +88,7 @@ For simplicity, I have put those commands in a Makefile. So you can run them dir
 
 So we could go to the terminal on port 8080, and obtain the response.
 
-# Adding another Enpoint
+# Adding another Endpoint
 To give a bit more information, we could add another endpoint.
 This one, checks for parameters on the URL to then create a custom output:
 ```
