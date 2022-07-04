@@ -20,7 +20,7 @@ If we wanted to run on a different port, we would put *r.Run(":5000")*.
 
 To run this endpoint:
 ```
-    go run main.go
+    go run main-v1.go
 ```
 
 And to test this endpoint:
@@ -59,7 +59,7 @@ For this, we use the Dockerfile:
     WORKDIR /app
 
     # Pass to this new directory the files we need
-    COPY main.go .
+    COPY main-v1.go .
     COPY go.mod .
     COPY go.sum .
 
@@ -69,7 +69,7 @@ For this, we use the Dockerfile:
 
     # Run the application
     EXPOSE 8080
-    CMD go run main.go
+    CMD go run main-v1.go
 ```
 Where first we state which is the golang version we want to use.
 
